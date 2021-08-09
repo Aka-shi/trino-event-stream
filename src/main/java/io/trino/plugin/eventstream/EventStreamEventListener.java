@@ -18,6 +18,7 @@ import io.trino.spi.eventlistener.EventListener;
 import io.trino.spi.eventlistener.QueryCompletedEvent;
 import io.trino.spi.eventlistener.QueryCreatedEvent;
 import io.trino.spi.eventlistener.SplitCompletedEvent;
+import java.time.Duration;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 
@@ -48,6 +49,9 @@ public class EventStreamEventListener
                 .setUserAgent(queryCreatedEvent.getContext().getUserAgent().toString())
                 .setRemoteClientAddress(queryCreatedEvent.getContext().getRemoteClientAddress().toString())
                 .setClientInfo(queryCreatedEvent.getContext().getClientInfo().toString())
+                .setEstCpuTime(queryCreatedEvent.getContext().getResourceEstimates().getCpuTime().orElse(Duration.ZERO).getSeconds())
+                .setEstMemoryBytes(queryCreatedEvent.getContext().getResourceEstimates().getPeakMemoryBytes().orElse(Long.MIN_VALUE))
+                .setEstQueryTime(queryCreatedEvent.getContext().getResourceEstimates().getExecutionTime().orElse(Duration.ZERO).getSeconds())
                 .build();
 
         try {

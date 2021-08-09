@@ -17,6 +17,9 @@
     },
     { "name": "ClientInfo", "type": ["null" ,"string"], "doc": "ClientInfo",
       "default": null
-    }
+    },
+    { "name": "EstQueryTime", "type": "long", "doc": "Estimated execution Time for the query"},
+    { "name": "EstCpuTime", "type": "long", "doc": "Estimated CPU Time for the query"},
+    { "name": "EstMemoryBytes", "type": "long", "doc": "Estimated memory bytes required for the query"}
   ]
 }
